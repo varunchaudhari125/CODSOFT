@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Varun Chaudhari — Web Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D1B2A;
+      --cream:  #F0EBE1;
+      --amber:  #F5A623;
+      --slate:  #4A5568;
+      --sage:   #8BA888;
+      --white:  #FFFFFF;
+      --rule:   2px solid var(--amber);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(13,27,42,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(245,166,35,0.15);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--amber); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--cream); text-decoration: none;
+      font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 8rem 4rem 4rem;
+      gap: 4rem;
+    }
+    .hero-text {}
+    .hero-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      font-weight: 700; line-height: 1.0;
+      color: var(--white); letter-spacing: -0.02em;
+    }
+    .hero-name span { color: var(--amber); }
+    .hero-slash {
+      display: inline-block; width: 60px; height: 5px;
+      background: var(--amber); margin: 1.5rem 0;
+      transform-origin: left; animation: growSlash 0.8s 0.4s both;
+    }
+    @keyframes growSlash { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .hero-tagline {
+      font-size: 1.1rem; color: rgba(240,235,225,0.65);
+      max-width: 420px; line-height: 1.75; margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block; padding: 0.85rem 2.2rem;
+      border: 2px solid var(--amber); color: var(--amber);
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .hero-cta:hover { background: var(--amber); color: var(--navy); }
+    .hero-cta + .hero-cta {
+      margin-left: 1rem; background: var(--amber); color: var(--navy);
+    }
+    .hero-cta + .hero-cta:hover { background: transparent; color: var(--amber); }
+
+    .hero-photo-wrap {
+      position: relative; display: flex; justify-content: center;
+    }
+    .hero-photo-frame {
+      width: 320px; height: 380px;
+      border: 2px solid rgba(245,166,35,0.3);
+      position: relative; overflow: hidden;
+    }
+    .hero-photo-frame img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: grayscale(20%);
+    }
+    .hero-photo-frame::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(160deg, transparent 60%, rgba(245,166,35,0.12));
+    }
+    .hero-photo-accent {
+      position: absolute; bottom: -12px; right: -12px;
+      width: 120px; height: 120px;
+      border: 2px solid var(--amber); z-index: -1;
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a2d40 0%, #243447 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.75rem;
+    }
+    .photo-placeholder svg { opacity: 0.4; }
+    .photo-placeholder span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(240,235,225,0.4);
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden; border-top: var(--rule); border-bottom: var(--rule);
+      padding: 0.75rem 0; background: rgba(245,166,35,0.04);
+    }
+    .ticker {
+      display: flex; gap: 3rem; width: max-content;
+      animation: scroll 22s linear infinite;
+    }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--amber); white-space: nowrap;
+    }
+    .ticker-dot { color: rgba(240,235,225,0.3); }
+
+    /* ── SECTIONS SHARED ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--sage); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      color: var(--white); line-height: 1.15; margin-bottom: 3rem;
+    }
+    .amber-rule { width: 48px; height: 3px; background: var(--amber); margin: 1rem 0 2.5rem; }
+
+    /* ── ABOUT ── */
+    #about {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-body p {
+      color: rgba(240,235,225,0.7); line-height: 1.85; margin-bottom: 1.25rem; font-size: 1rem;
+    }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .stat-box {
+      border-left: 3px solid var(--amber); padding-left: 1rem;
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 700; color: var(--amber); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem; color: rgba(240,235,225,0.5);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.25rem;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--navy); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; border: 1px solid rgba(255,255,255,0.07); }
+    .skill-cell {
+      padding: 1.75rem 1.5rem; border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .skill-cell:hover { background: rgba(245,166,35,0.06); }
+    .skill-cell::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 0; background: var(--amber);
+      transition: height 0.3s;
+    }
+    .skill-cell:hover::before { height: 100%; }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .skill-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem; font-weight: 600; color: var(--white);
+    }
+    .skill-sub {
+      font-size: 0.75rem; color: rgba(240,235,225,0.4); margin-top: 0.2rem;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: rgba(255,255,255,0.01); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden; transition: border-color 0.25s;
+      position: relative;
+    }
+    .project-card:hover { border-color: var(--amber); }
+    .project-img {
+      height: 180px; background: linear-gradient(135deg, #1a2d40 0%, #243447 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; position: relative; overflow: hidden;
+    }
+    .project-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(13,27,42,0.9));
+    }
+    .project-num {
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--amber);
+    }
+    .project-body { padding: 1.5rem; }
+    .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .tag {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--amber); padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(245,166,35,0.35);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .project-desc { font-size: 0.88rem; color: rgba(240,235,225,0.55); line-height: 1.65; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1rem; font-size: 0.8rem; font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--amber); text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .project-link:hover { gap: 0.7rem; }
+
+    /* ── RESUME ── */
+    #resume {
+      background: rgba(245,166,35,0.04);
+      border-top: var(--rule); border-bottom: var(--rule);
+      text-align: center; padding: 5rem 4rem;
+    }
+    .resume-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700;
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .resume-sub { color: rgba(240,235,225,0.55); margin-bottom: 2.5rem; font-size: 0.95rem; }
+    .resume-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2.8rem; background: var(--amber); color: var(--navy);
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .resume-btn:hover { opacity: 0.88; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-info {}
+    .contact-info p { color: rgba(240,235,225,0.6); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.25rem; padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .contact-icon {
+      width: 40px; height: 40px; border: 1px solid rgba(245,166,35,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--amber); flex-shrink: 0;
+    }
+    .contact-detail {}
+    .contact-detail small {
+      display: block; font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(240,235,225,0.35);
+      font-family: 'Space Grotesk', sans-serif; margin-bottom: 0.1rem;
+    }
+    .contact-detail span { color: var(--cream); font-size: 0.92rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-form input,
+    .contact-form textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1); color: var(--cream);
+      padding: 0.85rem 1.1rem; font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      width: 100%; outline: none; transition: border-color 0.2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--amber); }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: rgba(240,235,225,0.25); }
+    .contact-form textarea { resize: vertical; min-height: 130px; }
+    .form-submit {
+      padding: 0.9rem 2rem; background: var(--amber); color: var(--navy);
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      border: none; cursor: pointer; align-self: flex-start; transition: opacity 0.2s;
+    }
+    .form-submit:hover { opacity: 0.88; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080f17; border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-size: 0.78rem; color: rgba(240,235,225,0.3); font-family: 'Space Grotesk', sans-serif; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.78rem; color: rgba(240,235,225,0.3); text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--amber); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2rem; }
+      .hero-photo-wrap { justify-content: flex-start; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-photo-frame { width: 240px; height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">VC/</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Web Developer &amp; Creative Technologist</p>
+      <h1 class="hero-name">
+        Varun<br><span>Chaudhari</span><br>builds the Web.
+      </h1>
+      <div class="hero-slash"></div>
+      <p class="hero-tagline">
+        I craft clean, purposeful digital experiences — from pixel-precise interfaces to the logic running underneath them.
+      </p>
+      <a href="#projects" class="hero-cta">View Work</a>
+      <a href="#contact" class="hero-cta">Let's Talk</a>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-frame">
+        <div class="photo-placeholder">
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:5rem;font-weight:700;color:var(--amber);letter-spacing:-0.04em;line-height:1;">VC</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(240,235,225,0.35);margin-top:0.5rem;">Varun Chaudhari</div>
+        </div>
+      </div>
+      <div class="hero-photo-accent"></div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">HTML5</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">CSS3</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">JavaScript</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">React</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Node.js</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Responsive Design</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Git</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">REST APIs</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">MongoDB</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">UI/UX</span><span class="ticker-dot">·</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">HTML5</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">CSS3</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">JavaScript</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">React</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Node.js</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Responsive Design</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">Git</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">REST APIs</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">MongoDB</span><span class="ticker-dot">·</span>
+      <span class="ticker-item">UI/UX</span><span class="ticker-dot">·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal about-grid">
+      <div>
+        <p class="section-label">01 — About Me</p>
+        <h2 class="section-title">Developer by craft,<br>problem-solver by nature.</h2>
+        <div class="amber-rule"></div>
+        <div class="about-body">
+          <p>I'm a web developer passionate about building things that work beautifully on every device. I pay attention to the details that most skip — load speed, accessible markup, and interfaces that just make sense.</p>
+          <p>Currently pursuing my internship journey, I enjoy translating complex requirements into clean, maintainable code. I believe good software is invisible — it gets out of the way and lets people do their thing.</p>
+        </div>
+      </div>
+      <div>
+        <div class="about-stats">
+          <div class="stat-box">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Languages Mastered</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Commitment to Quality</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Curiosity Level</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <p class="section-label">02 — What I Work With</p>
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <div class="amber-rule"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-cell"><div class="skill-icon">🌐</div><div class="skill-name">HTML5</div><div class="skill-sub">Semantic markup</div></div>
+      <div class="skill-cell"><div class="skill-icon">🎨</div><div class="skill-name">CSS3</div><div class="skill-sub">Flexbox, Grid, Animations</div></div>
+      <div class="skill-cell"><div class="skill-icon">⚡</div><div class="skill-name">JavaScript</div><div class="skill-sub">ES6+, DOM APIs</div></div>
+      <div class="skill-cell"><div class="skill-icon">⚛️</div><div class="skill-name">React</div><div class="skill-sub">Components, Hooks</div></div>
+      <div class="skill-cell"><div class="skill-icon">🟢</div><div class="skill-name">Node.js</div><div class="skill-sub">Express, REST APIs</div></div>
+      <div class="skill-cell"><div class="skill-icon">🗄️</div><div class="skill-name">MongoDB</div><div class="skill-sub">NoSQL, Mongoose</div></div>
+      <div class="skill-cell"><div class="skill-icon">🔧</div><div class="skill-name">Git &amp; GitHub</div><div class="skill-sub">Version control</div></div>
+      <div class="skill-cell"><div class="skill-icon">📱</div><div class="skill-name">Responsive Design</div><div class="skill-sub">Mobile-first approach</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <p class="section-label">03 — Selected Work</p>
+      <h2 class="section-title">Projects</h2>
+      <div class="amber-rule"></div>
+    </div>
+    <div class="projects-grid reveal">
+      <div class="project-card">
+        <div class="project-img">🌍<div class="project-img-overlay"></div><span class="project-num">P·01</span></div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+          <div class="project-title">Portfolio Website</div>
+          <div class="project-desc">A personal portfolio built from scratch — the very site you're reading now. Fully responsive, with smooth scroll and section-by-section reveals.</div>
+          <a href="#" class="project-link">View Live →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img">🛒<div class="project-img-overlay"></div><span class="project-num">P·02</span></div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">React</span><span class="tag">Node</span><span class="tag">MongoDB</span></div>
+          <div class="project-title">E-Commerce App</div>
+          <div class="project-desc">Full-stack shopping application with cart, auth, and payment flow. Designed with a focus on performance and clean UX patterns.</div>
+          <a href="#" class="project-link">View Live →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img">📋<div class="project-img-overlay"></div><span class="project-num">P·03</span></div>
+        <div class="project-body">
+          <div class="project-tags"><span class="tag">JavaScript</span><span class="tag">CSS</span></div>
+          <div class="project-title">Task Manager</div>
+          <div class="project-desc">A local-first task management tool with drag-and-drop, priority tagging, and a minimal interface that stays out of the way.</div>
+          <a href="#" class="project-link">View Live →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume">
+    <div class="reveal">
+      <p class="section-label">04 — Resume</p>
+      <h2 class="resume-title">Want the full picture?</h2>
+      <p class="resume-sub">Download my resume to see my education, work history, and certifications in one place.</p>
+      <a href="https://drive.google.com/file/d/1-mt7Upshfb_m22CI5b1FGsXX4SNbHhon/view?usp=drive_link" target="_blank" class="resume-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume (PDF)
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <p class="section-label">05 — Get In Touch</p>
+        <h2 class="section-title">Let's build something together.</h2>
+        <div class="amber-rule"></div>
+        <p>Whether it's a job opportunity, a collaboration, or just a question — I read every message and reply within a day.</p>
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-detail">
+            <small>Email</small>
+            <span>varunchaudhari7498@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail">
+            <small>Phone</small>
+            <span>+91 74985 39787</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail">
+            <small>Location</small>
+            <span>Pune, Maharashtra, India</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-row">
+            <input type="text" placeholder="Your Name" />
+            <input type="email" placeholder="Email Address" />
+          </div>
+          <input type="text" placeholder="Subject" />
+          <textarea placeholder="Your message…"></textarea>
+          <button class="form-submit">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Varun Chaudhari — All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://github.com/varunchaudhari" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/varun-chaudhari-71688b375/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- SCROLL REVEAL JS -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
